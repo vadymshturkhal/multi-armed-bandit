@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as pd
+
 
 # Number of actions (bandits)
 k = 10
@@ -33,6 +35,22 @@ for _ in range(1000):
     reward = bandit(action)
     update_estimates(Q, N, action, reward)
 
-print("Estimated action values:", Q)
-print("True action values:", true_reward_probabilities)
-print("Number of times each action was chosen:", N)
+def clip_values(values: list) -> list:
+    for i in range(len(values)):
+        values[i] = f'{values[i]:.4f}'
+    return values
+
+
+# Creating a DataFrame to hold the results
+results = pd.DataFrame({
+    'Action': np.arange(1, k+1),
+    'Estimated Action Values': clip_values(Q),
+    'True Action Values': clip_values(true_reward_probabilities),
+    'Number of Times Chosen': N
+})
+
+# Save the DataFrame to a CSV file
+file_path = './bandit_results.csv'
+results.to_csv(file_path, index=False)
+
+results.head(), file_path
