@@ -29,5 +29,5 @@ data = agent_bandit.create_data(file_path=file_path)
 print(data.head(n=k))
 
 
-game = MultiArmedGame(k, true_reward_probabilities, is_rendering=True)
+game = MultiArmedGame(k, true_reward_probabilities, speed=10, is_rendering=True)
 game.game_loop()

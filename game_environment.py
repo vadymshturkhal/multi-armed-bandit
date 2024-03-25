@@ -1,3 +1,4 @@
+from turtle import speed
 import pygame
 import random
 import sys
@@ -13,12 +14,13 @@ text_color = (255, 255, 255)
 
 
 class MultiArmedGame:
-    def __init__(self, k, reward_probabilities, is_rendering=True, ai_agent=None):
+    def __init__(self, k, reward_probabilities, speed=30, is_rendering=True, ai_agent=None):
         self.total_score = 0
         self.last_reward = 0
         self.last_choice = None
         self.k = k
         self.reward_probabilities = reward_probabilities
+        self.game_speed = speed
         self.is_rendering = is_rendering
         self.ai_agent = ai_agent
     
@@ -38,7 +40,7 @@ class MultiArmedGame:
             if self.is_rendering:
                 self._handle_events()
                 self._update_ui()
-                self.clock.tick(60)
+                self.clock.tick(self.game_speed)
                 pygame.display.flip()
     
     def _handle_events(self):
