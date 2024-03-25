@@ -33,4 +33,12 @@ pip install pygame numpy matplotlib pandas
 ```
 
 ## Running
+To run the simulation with the reinforcement learning agent:
+```bash
+python multi_armed_bandit.py
+```
 
+## Viewing plots of the agent's performance and decisions:
+```bash
+python plot_data.py
+```
