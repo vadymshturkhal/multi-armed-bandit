@@ -24,7 +24,7 @@ def train_bandit(game, agent_bandit, steps):
     return np.cumsum(optimal_action_count) / np.arange(1, steps + 1)
 
 # Define a function to plot the results
-def plot_results(percentages, epsilon):
+def plot_learning_curve(percentages, epsilon):
     plt.figure(figsize=(10, 5))
     # plt.plot(range(steps), percentages, label='ε-greedy')
     plt.plot(percentages, label=f'Realistic, ε-greedy (ε={epsilon})')
@@ -51,7 +51,6 @@ if __name__ =='__main__':
     data = agent_bandit.create_data(file_path=file_path)
     print(data.head(n=k))
 
-    # Plot learning curve
-    plot_results(percentage_optimal_action, epsilon)
+    plot_learning_curve(percentage_optimal_action, epsilon)
 
 
