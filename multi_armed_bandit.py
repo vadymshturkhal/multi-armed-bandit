@@ -1,9 +1,6 @@
-from unicodedata import name
 import numpy as np
 from agent import BanditAgent
 from game_environment import MultiArmedGame
-
-
 
 
 # Simulate pulling the bandit's lever
