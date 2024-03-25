@@ -1,5 +1,5 @@
 import numpy as np
-from agent import BanditAgent
+from agent_stationary import BanditAgent
 from game_environment import MultiArmedGame
 import matplotlib.pyplot as plt
 
@@ -51,6 +51,4 @@ if __name__ =='__main__':
     data = agent_bandit.create_data(file_path=file_path)
     print(data.head(n=k))
 
-    plot_learning_curve(percentage_optimal_action, epsilon)
-
-
+    # plot_learning_curve(percentage_optimal_action, epsilon)
