@@ -19,6 +19,11 @@ class BanditAgent:
         else:
             return np.argmax(self.Q)  # Exploit: choose the best current action
 
+    # Update the estimates of action values
+    def update_estimates(self, action, reward):
+        self.N[action] += 1
+        self.Q[action] += (1 / self.N[action]) * (reward - self.Q[action])
+
     def create_data(self, file_path):
         # Creating a DataFrame to hold the results
         results = pd.DataFrame({
