@@ -1,5 +1,6 @@
 import numpy as np
 from agent import BanditAgent
+from game_environment import MultiArmedGame
 
 
 k = 10  # Number of actions (bandits)
@@ -27,3 +28,6 @@ train_bandit(agent_bandit, steps)
 data = agent_bandit.create_data(file_path=file_path)
 print(data.head(n=k))
 
+
+game = MultiArmedGame(k, true_reward_probabilities, is_rendering=True)
+game.game_loop()
