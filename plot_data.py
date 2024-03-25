@@ -5,6 +5,7 @@ data_filename = 'bandit_results.csv'
 
 # Load the results from a CSV file
 results_df = pd.read_csv(data_filename)  # Replace with the path to your CSV file
+print(pd.read_csv(data_filename))
 
 # Plot the number of times each arm has been chosen
 plt.figure(figsize=(10, 6))
