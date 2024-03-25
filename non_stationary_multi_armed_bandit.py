@@ -1,5 +1,5 @@
 import numpy as np
-from agent_stationary import BanditAgent
+from agent_non_stationary import BanditAgent
 from game_environment import MultiArmedGame
 import matplotlib.pyplot as plt
 
@@ -8,23 +8,28 @@ import matplotlib.pyplot as plt
 def bandit(a):
     return 1 if (np.random.rand() < true_reward_probabilities[a]) else 0
 
-def change_arm_probabilities(true_reward_probabilities):
-     true_reward_probabilities += np.random.normal(0, 0.01, size=true_reward_probabilities.shape)
+def change_arm_probabilities(probabilities):
+    probabilities += np.random.normal(0, 0.01, size=probabilities.shape)
+    probabilities = np.clip(probabilities, 0, 1)
+    return probabilities  # Return the updated probabilities
 
-def train_bandit(game, agent_bandit, steps):
+def train_bandit(game, agent_bandit, steps, true_reward_probabilities):
     # Let's simulate 1000 steps of the bandit problem
     optimal_action_count = np.zeros(steps)
     for step in range(steps):
+        # Determine the current optimal action
+        current_optimal_action = np.argmax(true_reward_probabilities)
+
         action = agent_bandit.choose_action()
         game.apply_action(action)
         game.play_step()
         reward = bandit(action)
         agent_bandit.update_estimates(action, reward)
 
-        if action == optimal_action:
+        if action == current_optimal_action:
             optimal_action_count[step] = 1
         
-        change_arm_probabilities(true_reward_probabilities)
+        true_reward_probabilities = change_arm_probabilities(true_reward_probabilities)
 
     return np.cumsum(optimal_action_count) / np.arange(1, steps + 1)
 
@@ -42,17 +47,17 @@ def plot_learning_curve(percentages, epsilon):
 if __name__ =='__main__':
     k = 10  # Number of actions (bandits)
     epsilon = 0.1  # Exploration probability
+    alpha = 0.01
     steps = 1000
     file_path = './bandit_results.csv'
 
     # True reward probabilities for each bandit
     true_reward_probabilities = np.random.rand(k)
-    optimal_action = np.argmax(true_reward_probabilities)
 
-    agent_bandit = BanditAgent(k, epsilon, true_reward_probabilities)
+    agent_bandit = BanditAgent(k, epsilon, alpha, true_reward_probabilities)
     game = MultiArmedGame(k, true_reward_probabilities, speed=60, is_rendering=False)
 
-    percentage_optimal_action = train_bandit(game, agent_bandit, steps=1000)
+    percentage_optimal_action = train_bandit(game, agent_bandit, steps, true_reward_probabilities=true_reward_probabilities)
     data = agent_bandit.create_data(file_path=file_path)
     print(data.head(n=k))
 

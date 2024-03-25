@@ -13,7 +13,6 @@ class BanditAgent:
         self.Q = np.zeros(k)
         self.N = np.zeros(k)
         self.sigma = np.zeros(k)  # For the unbiased constant-step-size
-        self.action_count = np.zeros(k)
 
     # Choose an action using epsilon-greedy strategy
     def choose_action(self):
@@ -29,8 +28,8 @@ class BanditAgent:
         # Calculate the step size
         beta = self.alpha / self.sigma[action]
         # Update the estimate
+        self.N[action] += 1
         self.Q[action] += beta * (reward - self.Q[action])
-        self.action_count[action] += 1
 
     def create_data(self, file_path):
         # Creating a DataFrame to hold the results
