@@ -4,7 +4,7 @@ This repository contains a simulation of the Multi-Armed Bandit problem, impleme
 
 ## Description
 
-The Multi-Armed Bandit problem is a classic reinforcement learning scenario that models decision-making under uncertainty. In this project, we simulate a k-armed bandit machine, where each arm (action) has its own fixed but unknown probability of rewarding the player. The objective is to maximize the total reward over a series of arm pulls.
+The Multi-Armed Bandit problem is a classic reinforcement learning scenario that models decision-making under uncertainty. In this project, I simulated a k-armed bandit machine, where each arm (action) has its own fixed but unknown probability of rewarding the player. The objective is to maximize the total reward over a series of arm pulls.
 
 ### Game
 
