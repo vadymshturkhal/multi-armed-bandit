@@ -54,14 +54,17 @@ class MultiArmedGame:
                 if event.type == pygame.KEYDOWN:
                     if pygame.K_1 <= event.key <= pygame.K_9:
                         chosen_bandit = event.key - pygame.K_1
-                        if chosen_bandit < self.k:
-                            self.last_choice = chosen_bandit
-                            # Simulate bandit pull
-                            if random.random() < self.reward_probabilities[chosen_bandit]:
-                                self.last_reward = 1
-                            else:
-                                self.last_reward = 0
-                            self.total_score += self.last_reward
+                        self.apply_action(chosen_bandit)
+
+    def apply_action(self, action):
+        if action < self.k:
+            self.last_choice = action
+            # Simulate bandit pull
+            if random.random() < self.reward_probabilities[action]:
+                self.last_reward = 1
+            else:
+                self.last_reward = 0
+            self.total_score += self.last_reward
 
     def _draw_text(self, text, position):
         text_surface = self.font.render(text, True, text_color)
