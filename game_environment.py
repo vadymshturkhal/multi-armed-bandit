@@ -35,13 +35,12 @@ class MultiArmedGame:
             pygame.font.init()  # Initialize font module
             self.font = pygame.font.Font(None, 36)
 
-    def game_loop(self):
-        while True:
-            if self.is_rendering:
-                self._handle_events()
-                self._update_ui()
-                self.clock.tick(self.game_speed)
-                pygame.display.flip()
+    def play_step(self):
+        if self.is_rendering:
+            self._handle_events()
+            self._update_ui()
+            self.clock.tick(self.game_speed)
+            pygame.display.flip()
     
     def _handle_events(self):
         for event in pygame.event.get():

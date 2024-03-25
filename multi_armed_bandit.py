@@ -15,19 +15,24 @@ true_reward_probabilities = np.random.rand(k)
 def bandit(a):
     return 1 if (np.random.rand() < true_reward_probabilities[a]) else 0
 
-def train_bandit(agent_bandit, steps):
+def train_bandit(game, agent_bandit, steps):
     # Let's simulate 1000 steps of the bandit problem
+
     for _ in range(steps):
         action = agent_bandit.choose_action()
+        game.apply_action(action)
+        game.play_step()
         reward = bandit(action)
         agent_bandit.update_estimates(action, reward)
 
 
 agent_bandit = BanditAgent(k, epsilon, true_reward_probabilities)
-train_bandit(agent_bandit, steps)
+game = MultiArmedGame(k, true_reward_probabilities, speed=10, is_rendering=True)
+
+train_bandit(game, agent_bandit, steps)
 data = agent_bandit.create_data(file_path=file_path)
 print(data.head(n=k))
 
 
-game = MultiArmedGame(k, true_reward_probabilities, speed=10, is_rendering=True)
-game.game_loop()
+
+
