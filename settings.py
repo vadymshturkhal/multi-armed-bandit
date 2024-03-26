@@ -1,1 +1,1 @@
-stationary_bandit_data_filename = './stationary_bandit_results.csv'
+stationary_bandit_data_filename = './data/stationary_bandit_bar_results.csv'
