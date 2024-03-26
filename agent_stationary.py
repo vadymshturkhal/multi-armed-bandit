@@ -1,5 +1,7 @@
 import numpy as np
 
+from settings import ACTION_COST, START_POINT
+
 
 class BanditAgent:
     """
@@ -31,6 +33,8 @@ class BanditAgent:
         """
         self.k = k
         self.epsilon = epsilon
+        self.points = START_POINT
+        self.rewards = []
 
         # Initialize estimates of action values and action counts
         self.Q = np.zeros(k)
@@ -62,3 +66,7 @@ class BanditAgent:
         self.N[action] += 1
         #  Update the action value estimate with the incremental sample-average formula
         self.Q[action] += (1 / self.N[action]) * (reward - self.Q[action])
+    
+    def update_points(self, reward):
+        self.points += reward - ACTION_COST
+        self.rewards.append(self.points)

@@ -11,6 +11,7 @@ def train_bandit(game: MultiArmedGame, agent_bandit: NonStationaryBanditAgent, s
         reward = game.apply_action(action)
         game.play_step()
         agent_bandit.update_estimates(action, reward)
+        agent_bandit.update_points(reward)
         rewards_after_each_step.append(reward)
 
 
@@ -26,5 +27,5 @@ if __name__ =='__main__':
     game = MultiArmedGame(k, speed=60, is_rendering=False, is_change_probabilities=True)
 
     train_bandit(game, agent_bandit, steps)
-    create_average_data(nonstationary_bandit_data_average_reward, rewards_after_each_step)
+    create_average_data(nonstationary_bandit_data_average_reward, rewards_after_each_step, agent_bandit)
     plot_average_rewards(nonstationary_bandit_data_average_reward)
