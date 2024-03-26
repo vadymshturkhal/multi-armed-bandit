@@ -3,10 +3,9 @@ import pandas as pd
 
 
 class BanditAgent:
-    def __init__(self, k, epsilon, true_reward_probabilities):
+    def __init__(self, k, epsilon):
         self.k = k
         self.epsilon = epsilon
-        self.true_reward_probabilities = true_reward_probabilities
 
         # Initialize estimates of action values and action counts
         self.Q = np.zeros(k)
@@ -24,12 +23,12 @@ class BanditAgent:
         self.N[action] += 1
         self.Q[action] += (1 / self.N[action]) * (reward - self.Q[action])
 
-    def create_data(self, file_path):
+    def create_data(self, file_path, true_reward_probabilities):
         # Creating a DataFrame to hold the results
         results = pd.DataFrame({
             'Action': np.arange(1, self.k+1),
             'Estimated Action Values': self._clip_values(self.Q),
-            'True Action Values': self._clip_values(self.true_reward_probabilities),
+            'True Action Values': self._clip_values(true_reward_probabilities),
             'Number of Times Chosen': self.N
         })
 
