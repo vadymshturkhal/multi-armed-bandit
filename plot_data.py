@@ -4,7 +4,7 @@ import pandas as pd
 from settings import stationary_bandit_data_filename
 
 
-def plot_stationary_data():
+def plot_stationary_bar_data():
     # Load the results from a CSV file
     df = pd.read_csv(stationary_bandit_data_filename)
 
@@ -27,4 +27,4 @@ def plot_stationary_data():
 
 
 if __name__ == '__main__':
-    plot_stationary_data()
+    plot_stationary_bar_data()
