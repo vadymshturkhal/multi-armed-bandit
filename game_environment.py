@@ -14,7 +14,10 @@ text_color = (255, 255, 255)
 
 
 class MultiArmedGame:
-    def __init__(self, k, speed=30, is_rendering=True, ai_agent=None):
+    def __init__(self, k, speed=30, is_rendering=True, ai_agent=None, is_change_probabilities=False):
+        """
+        is_change_probabilities changed rewards every game step.
+        """
         self.total_score = 0
         self.last_reward = 0
         self.last_choice = None
@@ -23,6 +26,7 @@ class MultiArmedGame:
         self.is_rendering = is_rendering
         self.ai_agent = ai_agent
         self.rewards = Rewards(k)
+        self.is_change_probabilities = is_change_probabilities
     
         # init display
         if self.is_rendering:
@@ -41,6 +45,9 @@ class MultiArmedGame:
             self._update_ui()
             self.clock.tick(self.game_speed)
             pygame.display.flip()
+        
+        if self.is_change_probabilities:
+            self.rewards.change_reward_probabilities()
     
     def _handle_events(self):
         for event in pygame.event.get():
