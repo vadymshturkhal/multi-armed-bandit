@@ -18,7 +18,7 @@ def train_bandit(game: MultiArmedGame, agent_bandit: NonStationaryBanditAgent, s
 if __name__ =='__main__':
     k = 10  # Number of actions (bandits)
     epsilon = 0.1  # Exploration probability
-    alpha = 0.1
+    alpha = 0.2
     steps = 1000
     rewards_after_each_step = []
 
