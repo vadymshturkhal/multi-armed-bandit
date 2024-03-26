@@ -22,21 +22,3 @@ class BanditAgent:
     def update_estimates(self, action, reward):
         self.N[action] += 1
         self.Q[action] += (1 / self.N[action]) * (reward - self.Q[action])
-
-    def create_data(self, file_path, true_reward_probabilities):
-        # Creating a DataFrame to hold the results
-        results = pd.DataFrame({
-            'Action': np.arange(1, self.k+1),
-            'Estimated Action Values': self._clip_values(self.Q),
-            'True Action Values': self._clip_values(true_reward_probabilities),
-            'Number of Times Chosen': self.N
-        })
-
-        # Save the DataFrame to a CSV file
-        results.to_csv(file_path, index=False)
-        return results
-
-    def _clip_values(self, values: list) -> list:
-        for i in range(len(values)):
-            values[i] = f'{values[i]:.4f}'
-        return values
