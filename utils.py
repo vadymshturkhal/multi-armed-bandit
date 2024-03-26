@@ -18,6 +18,7 @@ def create_bar_data(file_path: str, k: int, agent_bandit, true_reward_probabilit
 def create_average_data(file_path: str, rewards):
     # Creating a DataFrame to hold the results
     results = pd.DataFrame({
+        'Steps': np.arange(1, len(rewards) + 1),
         'Rewards': rewards,
         'Average': np.cumsum(rewards) / np.arange(1, len(rewards) + 1)
     })
