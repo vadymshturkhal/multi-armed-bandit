@@ -15,15 +15,17 @@ class Rewards:
 
 class DealerRewards:
     def __init__(self):
-        self._case_a = [0.1, 0.3, 0.4, 0.2]
-        self._case_b = [0.3, 0.4, 0.2, 0.1]
+        self.rewards = [0, 1, 2, 4, 10]
+        self._case_a = [0.5, 0.25, 0.15, 0.08, 0.02]
+        self._case_b = [0.4, 0.35, 0.15, 0.08, 0.02]
         self._cases = [self._case_a, self._case_b]
         self._cases_probabilities = [0.5, 0.5]
         self._current_probabilities = self._case_a
 
     # Simulate pulling the bandit's lever
     def get_reward(self, action):
-        return 1 if np.random.rand() < self._current_probabilities[action - 1] else 0
+        # return 1 if np.random.rand() < self._current_probabilities[action - 1] else 0
+        return np.random.choice(self.rewards, p=self._current_probabilities)
 
     def change_reward_probabilities(self):
         probability_case_index = np.random.choice(len(self._cases), size=1)[0]
