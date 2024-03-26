@@ -22,4 +22,4 @@ if __name__ =='__main__':
     game = MultiArmedGame(k, speed=60, is_rendering=False)
 
     train_bandit(game, agent_bandit, steps)
-    data = create_bar_data(stationary_bandit_data_filename, k, agent_bandit.Q, agent_bandit.N, game.rewards.true_reward_probabilities)
+    data = create_bar_data(stationary_bandit_data_filename, k, agent_bandit, game.rewards.true_reward_probabilities)
