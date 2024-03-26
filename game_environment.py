@@ -1,6 +1,7 @@
 import pygame
-import random
 import sys
+
+from rewards import Rewards
 
 
 # Screen dimensions
@@ -13,15 +14,15 @@ text_color = (255, 255, 255)
 
 
 class MultiArmedGame:
-    def __init__(self, k, reward_probabilities, speed=30, is_rendering=True, ai_agent=None):
+    def __init__(self, k, speed=30, is_rendering=True, ai_agent=None):
         self.total_score = 0
         self.last_reward = 0
         self.last_choice = None
         self.k = k
-        self.reward_probabilities = reward_probabilities
         self.game_speed = speed
         self.is_rendering = is_rendering
         self.ai_agent = ai_agent
+        self.rewards = Rewards(k)
     
         # init display
         if self.is_rendering:
@@ -57,12 +58,11 @@ class MultiArmedGame:
     def apply_action(self, action):
         if action < self.k:
             self.last_choice = action
-            # Simulate bandit pull
-            if random.random() < self.reward_probabilities[action]:
-                self.last_reward = 1
-            else:
-                self.last_reward = 0
+            self.last_reward = self.rewards.get_reward(action)
             self.total_score += self.last_reward
+            return self.last_reward
+        else:
+            raise Exception(f"Can't pull arm {action}")
 
     def _draw_text(self, text, position):
         text_surface = self.font.render(text, True, text_color)
