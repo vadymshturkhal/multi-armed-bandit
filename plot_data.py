@@ -1,12 +1,12 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-data_filename = 'bandit_results.csv'
+from settings import stationary_bandit_data_filename
+
 
 # Load the results from a CSV file
-results_df = pd.read_csv(data_filename)  # Replace with the path to your CSV file
-df = pd.read_csv(data_filename)
-print(df)
+results_df = pd.read_csv(stationary_bandit_data_filename)  # Replace with the path to your CSV file
+df = pd.read_csv(stationary_bandit_data_filename)
 
 # Create the plot
 plt.figure(figsize=(10, 6))
