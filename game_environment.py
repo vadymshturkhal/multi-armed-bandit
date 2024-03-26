@@ -1,7 +1,7 @@
 import pygame
 import sys
 
-from rewards import Rewards
+from rewards import Rewards, DealerRewards
 
 
 # Screen dimensions
@@ -25,7 +25,8 @@ class MultiArmedGame:
         self.game_speed = speed
         self.is_rendering = is_rendering
         self.ai_agent = ai_agent
-        self.rewards = Rewards(k)
+        # self.rewards = Rewards(k)
+        self.rewards = DealerRewards()
         self.is_change_probabilities = is_change_probabilities
     
         # init display

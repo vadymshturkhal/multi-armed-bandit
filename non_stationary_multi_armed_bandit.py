@@ -6,7 +6,6 @@ from utils import create_average_data
 
 
 def train_bandit(game: MultiArmedGame, agent_bandit: NonStationaryBanditAgent, steps=1000):
-    # Let's simulate 1000 steps of the bandit problem
     for _ in range(steps):
         action = agent_bandit.choose_action()
         reward = game.apply_action(action)
@@ -16,7 +15,7 @@ def train_bandit(game: MultiArmedGame, agent_bandit: NonStationaryBanditAgent, s
 
 
 if __name__ =='__main__':
-    k = 10  # Number of actions (bandits)
+    k = 4  # Number of actions (bandits)
     epsilon = 0.1  # Exploration probability
     alpha = 0.2
     steps = 1000
