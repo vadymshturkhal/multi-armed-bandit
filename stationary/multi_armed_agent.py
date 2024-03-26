@@ -1,11 +1,17 @@
-from agent_stationary import BanditAgent
+from agent import Agent
 from game_environment import MultiArmedGame
+
+import sys
+from pathlib import Path
+# Add the parent directory to sys.path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
 from plot_data import plot_stationary_bar_data
-from settings import stationary_bandit_data_bar_filename, stationary_bandit_data_average_reward
-from utils import create_average_data, create_bar_data
+from settings import stationary_bandit_data_bar_filename
+from utils import create_bar_data
 
 
-def train_bandit(game: MultiArmedGame, agent_bandit: BanditAgent, steps=1000):
+def train_bandit(game: MultiArmedGame, agent_bandit: Agent, steps=1000):
     # Let's simulate 1000 steps of the bandit problem
     for _ in range(steps):
         action = agent_bandit.choose_action()
@@ -21,7 +27,7 @@ if __name__ =='__main__':
     steps = 1000
     rewards_after_each_step = []
 
-    agent_bandit = BanditAgent(k, epsilon)
+    agent_bandit = Agent(k, epsilon)
     game = MultiArmedGame(k, speed=60, is_rendering=False)
 
     train_bandit(game, agent_bandit, steps)

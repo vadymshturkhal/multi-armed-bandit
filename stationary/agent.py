@@ -1,9 +1,14 @@
+import sys
+from pathlib import Path
 import numpy as np
+
+# Add the parent directory to sys.path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from settings import ACTION_COST, START_POINT
 
 
-class BanditAgent:
+class Agent:
     """
     A class representing an agent that interacts with a stationary k-armed bandit environment.
 
