@@ -1,5 +1,6 @@
 from agent_stationary import BanditAgent
 from game_environment import MultiArmedGame
+from plot_data import plot_stationary_bar_data
 from settings import stationary_bandit_data_bar_filename, stationary_bandit_data_average_reward
 from utils import create_average_data, create_bar_data
 
@@ -25,4 +26,4 @@ if __name__ =='__main__':
 
     train_bandit(game, agent_bandit, steps)
     create_bar_data(stationary_bandit_data_bar_filename, k, agent_bandit, game.rewards.true_reward_probabilities)
-    create_average_data(stationary_bandit_data_average_reward, rewards_after_each_step)
+    plot_stationary_bar_data()

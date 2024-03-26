@@ -1,7 +1,7 @@
 import pygame
 import sys
 
-from rewards import Rewards, DealerRewards
+from rewards import Rewards
 
 
 # Screen dimensions
@@ -25,8 +25,7 @@ class MultiArmedGame:
         self.game_speed = speed
         self.is_rendering = is_rendering
         self.ai_agent = ai_agent
-        # self.rewards = Rewards(k)
-        self.rewards = DealerRewards()
+        self.rewards = Rewards(k)
         self.is_change_probabilities = is_change_probabilities
     
         # init display
@@ -46,10 +45,7 @@ class MultiArmedGame:
             self._update_ui()
             self.clock.tick(self.game_speed)
             pygame.display.flip()
-        
-        if self.is_change_probabilities:
-            self.rewards.change_reward_probabilities()
-    
+
     def _handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

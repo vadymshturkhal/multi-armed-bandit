@@ -9,7 +9,6 @@ def create_bar_data(file_path: str, k: int, agent, true_reward_probabilities):
         'Estimated Action Values': agent.Q,
         'True Action Values': true_reward_probabilities,
         'Number of Times Chosen': agent.N,
-        'Points': agent.rewards,
     })
 
     # Save the DataFrame to a CSV file
