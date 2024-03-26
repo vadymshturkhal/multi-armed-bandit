@@ -1,5 +1,4 @@
 from agent_non_stationary import NonStationaryBanditAgent
-from agent_stationary import BanditAgent
 from game_environment import MultiArmedGame
 from plot_data import plot_average_rewards
 from settings import nonstationary_bandit_data_average_reward
