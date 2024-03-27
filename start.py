@@ -15,12 +15,15 @@ def train_bandit(game: MultiArmedGame, main_agent: NonStationaryAgent, support_a
         last_bet = game.last_bet
 
         main_agent.update_estimates(action, reward - last_bet)
-        main_agent.update_points(last_bet, reward)
+        is_end = main_agent.update_points(last_bet, reward)
 
         support_agent.update_estimates(support_action, reward)
         rewards.append(reward)
         
         betting.append(last_bet)
+
+        if is_end:
+            break
 
 
 if __name__ =='__main__':

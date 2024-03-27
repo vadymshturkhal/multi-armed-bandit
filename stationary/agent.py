@@ -55,7 +55,10 @@ class Agent:
         Returns:
             int: The index of the selected action.
         """
-        return np.random.choice(len(self.Q))  # Explore: choose a random action
+        if np.random.rand() < self.epsilon:
+            return np.random.choice(len(self.Q))  # Explore: choose a random action
+        else:
+            return np.argmax(self.Q)  # Exploit: choose the best current action
 
     def update_estimates(self, action, reward):
         """
@@ -73,6 +76,9 @@ class Agent:
         self.points += reward - bet
         self.rewards.append(self.points)
         if self.points >= START_POINT * END_MULTIPLIER:
+            return True
+
+        if self.points <= 0:
             return True
         
         return False
