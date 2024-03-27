@@ -23,7 +23,9 @@ def train_bandit(game: MultiArmedGame, main_agent: NonStationaryAgent, support_a
         betting.append(last_bet)
 
         if is_end:
+            # print(main_agent.points)
             break
+    return main_agent.points
 
 
 if __name__ =='__main__':
@@ -31,13 +33,20 @@ if __name__ =='__main__':
     epsilon = 0.1  # Exploration probability
     alpha = 0.2
     steps = 10000
-    rewards = []
-    betting = []
+    epochs = 40
 
-    main_agent = NonStationaryAgent(k, epsilon, alpha)
-    game = MultiArmedGame(k, speed=60, is_rendering=False)
-    support_agent = NonStationaryAgent(len(game.dealers[0].bet), epsilon, alpha)
+    cost = 0
+    for _ in range(40):
+        rewards = []
+        betting = []
+        main_agent = NonStationaryAgent(k, epsilon, alpha)
+        game = MultiArmedGame(k, speed=60, is_rendering=False)
+        support_agent = NonStationaryAgent(len(game.dealers[0].bet), epsilon, alpha)
 
-    train_bandit(game, main_agent, support_agent, steps)
-    create_average_data(nonstationary_bandit_data_average_reward, main_agent, rewards, betting)
-    plot_rewards(nonstationary_bandit_data_average_reward)
+        tax = train_bandit(game, main_agent, support_agent, steps)
+        if tax > 0:
+            cost += tax
+        else:
+            cost -= 1000
+        create_average_data(nonstationary_bandit_data_average_reward, main_agent, rewards, betting)
+    print(cost)
