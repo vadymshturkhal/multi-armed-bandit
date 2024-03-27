@@ -1,9 +1,9 @@
 import numpy as np
 
-from agent_stationary import BanditAgent
+from stationary.agent import Agent
 
 
-class NonStationaryBanditAgent(BanditAgent):
+class NonStationaryAgent(Agent):
     def __init__(self, k, epsilon, alpha):
         super().__init__(k, epsilon)
         self.alpha = alpha

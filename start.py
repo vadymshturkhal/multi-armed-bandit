@@ -1,11 +1,11 @@
-from agent_non_stationary import NonStationaryBanditAgent
+from agent import NonStationaryAgent
 from game_environment import MultiArmedGame
 from plot_data import plot_average_rewards
 from settings import nonstationary_bandit_data_average_reward
 from utils import create_average_data
 
 
-def train_bandit(game: MultiArmedGame, agent_bandit: NonStationaryBanditAgent, steps=1000):
+def train_bandit(game: MultiArmedGame, agent_bandit: NonStationaryAgent, steps=1000):
     for _ in range(steps):
         action = agent_bandit.choose_action()
         reward = game.apply_action(action)
@@ -16,14 +16,13 @@ def train_bandit(game: MultiArmedGame, agent_bandit: NonStationaryBanditAgent, s
 
 
 if __name__ =='__main__':
-    k = 5  # Number of actions (bandits)
+    k = 2  # Number of actions (bandits)
     epsilon = 0.1  # Exploration probability
     alpha = 0.2
     steps = 1000
     rewards_after_each_step = []
 
-    agent_bandit = NonStationaryBanditAgent(k, epsilon, alpha)
-    # agent_bandit = BanditAgent(k, epsilon)
+    agent_bandit = NonStationaryAgent(k, epsilon, alpha)
     game = MultiArmedGame(k, speed=60, is_rendering=False, is_change_probabilities=True)
 
     train_bandit(game, agent_bandit, steps)
