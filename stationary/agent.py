@@ -72,6 +72,6 @@ class Agent:
         #  Update the action value estimate with the incremental sample-average formula
         self.Q[action] += (1 / self.N[action]) * (reward - self.Q[action])
     
-    def update_points(self, reward):
-        self.points += reward - ACTION_COST
+    def update_points(self, bet, reward):
+        self.points += reward - bet
         self.rewards.append(self.points)
