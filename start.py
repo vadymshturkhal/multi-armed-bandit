@@ -28,7 +28,7 @@ if __name__ =='__main__':
     rewards_after_each_step = []
 
     main_agent = NonStationaryAgent(k, epsilon, alpha)
-    game = MultiArmedGame(k, speed=60, is_rendering=False, is_change_probabilities=True)
+    game = MultiArmedGame(k, speed=60, is_rendering=False)
     support_agent = NonStationaryAgent(len(game.rewards[0].bet), epsilon, alpha)
 
 

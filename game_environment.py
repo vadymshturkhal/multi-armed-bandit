@@ -14,7 +14,7 @@ text_color = (255, 255, 255)
 
 
 class MultiArmedGame:
-    def __init__(self, k, speed=30, is_rendering=True, ai_agent=None, is_change_probabilities=False):
+    def __init__(self, k, speed=30, is_rendering=True, ai_agent=None):
         """
         is_change_probabilities changed rewards every game step.
         """
@@ -26,7 +26,6 @@ class MultiArmedGame:
         self.is_rendering = is_rendering
         self.ai_agent = ai_agent
         self.rewards = [DealerRewards() for _ in range(k)]
-        self.is_change_probabilities = is_change_probabilities
     
         # init display
         if self.is_rendering:
