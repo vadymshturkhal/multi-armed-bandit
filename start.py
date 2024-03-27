@@ -36,7 +36,7 @@ if __name__ =='__main__':
     epochs = 40
 
     cost = 0
-    for _ in range(40):
+    for _ in range(epochs):
         rewards = []
         betting = []
         main_agent = NonStationaryAgent(k, epsilon, alpha)
