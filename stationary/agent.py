@@ -28,7 +28,7 @@ class Agent:
         update_estimates(action, reward): Updates the estimated values (Q) based on the received reward.
     """
 
-    def __init__(self, k, epsilon):
+    def __init__(self, k, epsilon=0.1):
         """
         Initializes the BanditAgent with the specified number of actions (k) and the exploration rate (epsilon).
 

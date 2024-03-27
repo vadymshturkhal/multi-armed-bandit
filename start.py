@@ -1,4 +1,4 @@
-from agent import NonStationaryAgent
+from agent import NonStationaryAgent, NonStationaryAgentUCB
 from game_environment import MultiArmedGame
 from plot_data import plot_rewards
 from settings import nonstationary_bandit_data_average_reward
@@ -31,7 +31,7 @@ def train_bandit(game: MultiArmedGame, main_agent: NonStationaryAgent, support_a
 if __name__ =='__main__':
     k = 4  # Number of actions (bandits)
     epsilon = 0.1  # Exploration probability
-    alpha = 0.2
+    alpha = 0.8
     steps = 10000
     epochs = 40
 
@@ -39,7 +39,8 @@ if __name__ =='__main__':
     for _ in range(epochs):
         rewards = []
         betting = []
-        main_agent = NonStationaryAgent(k, epsilon, alpha)
+        # main_agent = NonStationaryAgent(k, epsilon, alpha)
+        main_agent = NonStationaryAgentUCB(k, alpha)
         game = MultiArmedGame(k, speed=60, is_rendering=False)
         support_agent = NonStationaryAgent(len(game.dealers[0].bet), epsilon, alpha)
 
@@ -49,4 +50,5 @@ if __name__ =='__main__':
         else:
             cost -= 1000
         create_average_data(nonstationary_bandit_data_average_reward, main_agent, rewards, betting)
+        print(tax)
     print(cost)

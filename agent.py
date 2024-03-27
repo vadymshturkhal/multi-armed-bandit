@@ -21,3 +21,32 @@ class NonStationaryAgent(Agent):
         # Update the estimate
         self.N[action] += 1
         self.Q[action] += beta * (reward - self.Q[action])
+
+class NonStationaryAgentUCB(Agent):
+    def __init__(self, k, alpha, c=2):
+        """
+        Initializes the agent with the specified number of actions (k), the step-size parameter (alpha),
+        and the confidence level (c) for the UCB calculation.
+
+        Parameters:
+            k (int): The number of bandit arms.
+            alpha (float): The step size for updating estimates.
+            c (float): The confidence level for the UCB exploration term.
+        """
+        super().__init__(k)
+        self.alpha = alpha
+        self.c = c
+        self.total_steps = 0
+
+    def choose_action(self) -> int:
+        """
+        Selects an action using the Upper Confidence Bound (UCB) strategy.
+
+        Returns:
+            int: The index of the selected action.
+        """
+        self.total_steps += 1
+        if np.min(self.N) == 0:  # To ensure each action is tried at least once
+            return np.argmin(self.N)
+        ucb_values = self.Q + self.c * np.sqrt((2 * np.log(self.total_steps)) / self.N)
+        return np.argmax(ucb_values)
