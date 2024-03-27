@@ -5,7 +5,7 @@ import numpy as np
 # Add the parent directory to sys.path
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
-from settings import ACTION_COST, START_POINT
+from settings import END_MULTIPLIER, START_POINT
 
 
 class Agent:
@@ -55,10 +55,7 @@ class Agent:
         Returns:
             int: The index of the selected action.
         """
-        if np.random.rand() < self.epsilon:
-            return np.random.choice(len(self.Q))  # Explore: choose a random action
-        else:
-            return np.argmax(self.Q)  # Exploit: choose the best current action
+        return np.random.choice(len(self.Q))  # Explore: choose a random action
 
     def update_estimates(self, action, reward):
         """
@@ -75,3 +72,7 @@ class Agent:
     def update_points(self, bet, reward):
         self.points += reward - bet
         self.rewards.append(self.points)
+        if self.points >= START_POINT * END_MULTIPLIER:
+            return True
+        
+        return False

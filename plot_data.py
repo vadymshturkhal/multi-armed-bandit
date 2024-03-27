@@ -44,6 +44,24 @@ def plot_average_rewards(file_path: str):
     # Show the plot
     plt.show()
 
+def plot_rewards(file_path: str):
+    # Load the data from the CSV file
+    data = pd.read_csv(file_path)
+
+    # Plot the 'Average' column against the 'Step' column
+    plt.figure(figsize=(10, 5))
+    plt.plot(data['Steps'], data['Points'], label='Points')
+    
+    # Add labels and title
+    plt.xlabel('Steps')
+    plt.ylabel('APoints')
+    plt.title('Points Over Time')
+    
+    # Add a legend
+    plt.legend()
+    
+    # Show the plot
+    plt.show()
 
 if __name__ == '__main__':
     # plot_stationary_bar_data()
