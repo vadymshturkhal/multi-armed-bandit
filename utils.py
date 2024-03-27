@@ -15,13 +15,14 @@ def create_bar_data(file_path: str, k: int, agent, true_reward_probabilities):
     results.to_csv(file_path, index=False)
     return results
 
-def create_average_data(file_path: str, rewards, agent):
+def create_average_data(file_path: str, agent, rewards, betting):
     # Creating a DataFrame to hold the results
     results = pd.DataFrame({
         'Steps': np.arange(1, len(rewards) + 1),
-        'Rewards': rewards,
-        'Average': np.cumsum(rewards) / np.arange(1, len(rewards) + 1),
+        'Bet': betting,
+        'Reward': rewards,
         'Points': agent.rewards,
+        'Average': np.cumsum(rewards) / np.arange(1, len(rewards) + 1),
     })
 
     # Save the DataFrame to a CSV file

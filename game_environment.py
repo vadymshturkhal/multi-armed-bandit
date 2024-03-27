@@ -15,17 +15,14 @@ text_color = (255, 255, 255)
 
 class MultiArmedGame:
     def __init__(self, k, speed=30, is_rendering=True, ai_agent=None):
-        """
-        is_change_probabilities changed rewards every game step.
-        """
         self.total_score = 0
-        self.last_reward = 0
-        self.last_choice = None
+        self.last_dealer = 0
+        self.last_bet = None
         self.k = k
         self.game_speed = speed
         self.is_rendering = is_rendering
         self.ai_agent = ai_agent
-        self.rewards = [DealerRewards() for _ in range(k)]
+        self.dealers = [DealerRewards() for _ in range(k)]
     
         # init display
         if self.is_rendering:
@@ -63,8 +60,9 @@ class MultiArmedGame:
             raise Exception(f'Unavailable action {action}')
         
         if action <= self.k:
-            self.last_choice = action
-            self.last_reward = self.rewards[action].get_reward(bet)
+            self.last_dealer = action + 1
+            self.last_bet = self.dealers[action].bet[bet]
+            self.last_reward = self.dealers[action].get_reward(bet)
             self.total_score += self.last_reward
             return self.last_reward
         else:
