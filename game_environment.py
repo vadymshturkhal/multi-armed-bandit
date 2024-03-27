@@ -25,7 +25,7 @@ class MultiArmedGame:
         self.game_speed = speed
         self.is_rendering = is_rendering
         self.ai_agent = ai_agent
-        self.rewards = [DealerRewards() for i in range(k)]
+        self.rewards = [DealerRewards() for _ in range(k)]
         self.is_change_probabilities = is_change_probabilities
     
         # init display
@@ -59,13 +59,13 @@ class MultiArmedGame:
                         chosen_bandit = event.key - pygame.K_1
                         self.apply_action(chosen_bandit)
 
-    def apply_action(self, action: int):
+    def apply_action(self, action: int, bet:int):
         if action < 0:
             raise Exception(f'Unavailable action {action}')
         
         if action <= self.k:
             self.last_choice = action
-            self.last_reward = self.rewards[action].get_reward()
+            self.last_reward = self.rewards[action].get_reward(bet)
             self.total_score += self.last_reward
             return self.last_reward
         else:

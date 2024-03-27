@@ -8,7 +8,7 @@ from utils import create_average_data
 def train_bandit(game: MultiArmedGame, agent_bandit: NonStationaryAgent, steps=1000):
     for _ in range(steps):
         action = agent_bandit.choose_action()
-        reward = game.apply_action(action)
+        reward = game.apply_action(action, bet=1)
         game.play_step()
         agent_bandit.update_estimates(action, reward)
         agent_bandit.update_points(reward)
@@ -16,7 +16,7 @@ def train_bandit(game: MultiArmedGame, agent_bandit: NonStationaryAgent, steps=1
 
 
 if __name__ =='__main__':
-    k = 2  # Number of actions (bandits)
+    k = 4  # Number of actions (bandits)
     epsilon = 0.1  # Exploration probability
     alpha = 0.2
     steps = 1000
@@ -27,4 +27,4 @@ if __name__ =='__main__':
 
     train_bandit(game, agent_bandit, steps)
     create_average_data(nonstationary_bandit_data_average_reward, rewards_after_each_step, agent_bandit)
-    plot_average_rewards(nonstationary_bandit_data_average_reward)
+    # plot_average_rewards(nonstationary_bandit_data_average_reward)
