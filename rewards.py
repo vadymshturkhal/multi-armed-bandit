@@ -21,4 +21,4 @@ class DealerRewards:
 
     # Simulate pulling the bandit's lever
     def get_reward(self, bet):
-        return bet * np.random.choice(self.rewards, p=self._probabilities)
+        return self.bet[bet] * np.random.choice(self.rewards, p=self._probabilities)
