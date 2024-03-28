@@ -43,23 +43,30 @@ def start_epoch(main_agent, main_agent_params, support_agent, support_agent_para
             cost -= 1000
         create_average_data(nonstationary_bandit_data_average_reward, agent_instance, rewards, betting)
 
+    # plot_rewards(nonstationary_bandit_data_average_reward)
     return cost
 
 
 if __name__ =='__main__':
-    k = 4  # Number of actions (bandits)
-    epsilon = 0.1  # Exploration probability
-    alpha = 0.8
-    steps = 10000
-    epochs = 2
+    k = 1  # Number of actions (bandits)
+    epsilon = 0.2  # Exploration probability
+    alpha = 0.5
+    steps = 1000
+    epochs = 50
     rewards = []
     betting = []
 
     main_agent = NonStationaryAgent
     main_agent_params = [k, epsilon, alpha]
+
     support_agent = NonStationaryAgent
     support_agent_params = [len(BET), epsilon, alpha]
-    # main_agent = NonStationaryAgentUCB(k, alpha)
+
+    # main_agent = NonStationaryAgentUCB
+    # main_agent_params = [k, alpha]
+
+    # support_agent = NonStationaryAgentUCB
+    # support_agent_params = [k, alpha]
 
     print(start_epoch(main_agent, main_agent_params, support_agent, support_agent_params))
-
+    # plot_rewards(nonstationary_bandit_data_average_reward)

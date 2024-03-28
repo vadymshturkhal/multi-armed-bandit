@@ -18,8 +18,8 @@ class Rewards:
 class DealerRewards:
     def __init__(self):
         self.bet = BET
-        self._multiply = [0, 1, 2, 4, 8, 16]
-        self._probabilities = [0.61, 0.15, 0.13, 0.08, 0.02, 0.01]
+        self._multiply = [0, 1, 2, 4, 8, 16, 32]
+        self._probabilities = [0.61, 0.15, 0.13, 0.08, 0.02, 0.009, 0.001]
 
     # Simulate pulling the bandit's lever
     def get_reward(self, bet):
