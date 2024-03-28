@@ -25,11 +25,12 @@ To run this project, you need Python 3 and the following Python libraries:
 - NumPy
 - Matplotlib
 - Pandas
+- Psycopg2
 
 You can install the required libraries using pip:
 
 ```bash
-pip install pygame numpy matplotlib pandas
+pip install pygame numpy matplotlib pandas psycopg2
 ```
 
 ## Running

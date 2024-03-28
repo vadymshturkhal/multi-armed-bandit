@@ -2,7 +2,7 @@ from agent import NonStationaryAgent, NonStationaryAgentBet, NonStationaryAgentU
 from game_environment import MultiArmedGame
 from plot_data import plot_rewards
 from settings import nonstationary_bandit_data_average_reward, BET
-from utils import create_average_data
+from utils import add_epoch_to_db, create_average_data
 
 
 def train(game: MultiArmedGame, main_agent, support_agent, steps=1000):
@@ -17,7 +17,6 @@ def train(game: MultiArmedGame, main_agent, support_agent, steps=1000):
         last_bet = game.last_bet
 
         main_agent.update_estimates(choose_dealer, reward - last_bet)
-
         support_agent.update_estimates(choose_bet, reward - last_bet)
         is_end = support_agent.update_points(last_bet, reward)
 
@@ -31,7 +30,7 @@ def train(game: MultiArmedGame, main_agent, support_agent, steps=1000):
 
 def start_epoch(main_agent, main_agent_params, support_agent, support_agent_params):
     cost = 0
-    for _ in range(epochs):
+    for epoch in range(epochs):
         game = MultiArmedGame(k, speed=60, is_rendering=False)
         agent_instance = main_agent(*main_agent_params)
         support_agent_instance = support_agent(*support_agent_params)
@@ -42,8 +41,8 @@ def start_epoch(main_agent, main_agent_params, support_agent, support_agent_para
         else:
             cost -= 1000
         create_average_data(nonstationary_bandit_data_average_reward, support_agent_instance, rewards, betting)
+        add_epoch_to_db(epoch, support_agent_instance, rewards, betting)
 
-    # plot_rewards(nonstationary_bandit_data_average_reward)
     return cost
 
 
