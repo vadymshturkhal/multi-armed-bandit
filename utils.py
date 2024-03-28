@@ -84,7 +84,7 @@ class DB_Operations():
             cur.close()
             self._conn.close()
 
-    def _get_epoch_rewards(self, epochs_amount:int):
+    def get_epoch_rewards(self, epochs_amount:int):
         cur = self._conn.cursor()
         cur.execute(
             """
@@ -102,7 +102,3 @@ class DB_Operations():
         self._conn.close()
 
         return epoch_rewards
-    
-    def plot_last_epochs_rewards(self, epochs_amount:int):
-        epoch_rewards = self._get_epoch_rewards(epochs_amount)
-        print(epoch_rewards)
