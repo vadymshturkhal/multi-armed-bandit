@@ -38,7 +38,6 @@ def start_epoch(main_agent, main_agent_params, support_agent, support_agent_para
         epoch_reward = train(game, agent_instance, support_agent_instance, steps)
         if epoch_reward < START_POINT:
             epoch_reward = epoch_reward - START_POINT
-        print(epoch_reward)
 
         cost += epoch_reward
         create_average_data(nonstationary_bandit_data_average_reward, support_agent_instance, rewards, betting)

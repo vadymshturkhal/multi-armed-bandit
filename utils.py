@@ -42,7 +42,7 @@ class DB_Operations():
             host=HOST, 
             port=PORT,
         )
-        self._clear_epochs()
+        # self._clear_epochs()
         register_adapter(np.int64, self.addapt_numpy_int64)
 
     def _clear_epochs(self):
@@ -83,3 +83,26 @@ class DB_Operations():
             cur = self._conn.cursor()
             cur.close()
             self._conn.close()
+
+    def _get_epoch_rewards(self, epochs_amount:int):
+        cur = self._conn.cursor()
+        cur.execute(
+            """
+                SELECT reward FROM (
+                SELECT reward FROM epochs
+                ORDER BY fk_epoch_id DESC
+                LIMIT (%s)
+                ) AS last_rewards
+                ORDER BY reward ASC;;
+            """, (epochs_amount,))
+        rows = cur.fetchall()
+        epoch_rewards = [row[0] for row in rows]
+
+        cur.close()
+        self._conn.close()
+
+        return epoch_rewards
+    
+    def plot_last_epochs_rewards(self, epochs_amount:int):
+        epoch_rewards = self._get_epoch_rewards(epochs_amount)
+        print(epoch_rewards)

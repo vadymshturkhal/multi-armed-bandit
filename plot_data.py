@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from settings import stationary_bandit_data_bar_filename, stationary_bandit_data_average_reward
+from utils import DB_Operations
 
 
 def plot_stationary_bar_data():
@@ -64,5 +65,5 @@ def plot_rewards(file_path: str):
     plt.show()
 
 if __name__ == '__main__':
-    # plot_stationary_bar_data()
-    plot_average_rewards(stationary_bandit_data_average_reward)
+    db_operations = DB_Operations()
+    db_operations.plot_last_epochs_rewards(epochs_amount=10)
