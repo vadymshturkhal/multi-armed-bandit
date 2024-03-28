@@ -9,25 +9,25 @@ def train(game: MultiArmedGame, main_agent, support_agent, steps=1000):
     rewards.clear()
     betting.clear()
     for _ in range(steps):
-        action = main_agent.choose_action()
-        support_action = support_agent.choose_action()
+        choose_dealer = main_agent.choose_action()
+        choose_bet = support_agent.choose_action()
 
-        reward = game.apply_action(action, bet=support_action)
+        reward = game.apply_action(choose_dealer, bet=choose_bet)
         game.play_step()
         last_bet = game.last_bet
 
-        main_agent.update_estimates(action, reward - last_bet)
+        main_agent.update_estimates(choose_dealer, reward - last_bet)
 
-        support_agent.update_estimates(support_action, reward - last_bet)
+        support_agent.update_estimates(choose_bet, reward - last_bet)
         is_end = support_agent.update_points(last_bet, reward)
 
         rewards.append(reward)
         betting.append(last_bet)
 
         if is_end:
-            # print(main_agent.points)
+            print(support_agent.points)
             break
-    return main_agent.points
+    return support_agent.points
 
 def start_epoch(main_agent, main_agent_params, support_agent, support_agent_params):
     cost = 0
@@ -52,7 +52,7 @@ if __name__ =='__main__':
     epsilon = 0.2  # Exploration probability
     alpha = 0.5
     steps = 1000
-    epochs = 1
+    epochs = 40
     rewards = []
     betting = []
 
