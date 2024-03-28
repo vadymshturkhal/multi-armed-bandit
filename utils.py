@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import psycopg2
+from psycopg2.extensions import register_adapter, AsIs
 from db_setting import DB_NAME, USER, PASSWORD, HOST, PORT
 
 
@@ -31,24 +32,46 @@ def create_average_data(file_path: str, agent, rewards, betting):
     results.to_csv(file_path, index=False)
     return results
 
-def add_epoch_to_db(epoch, agent, rewards, betting):
-    conn = psycopg2.connect(
-        dbname=DB_NAME, 
-        user=USER, 
-        password=PASSWORD, 
-        host=HOST, 
-        port=PORT,
-    )
-    cur = conn.cursor()
+class DB_Operations():
+    def __init__(self, total_epochs=0):
+        self._total_epochs = total_epochs
+        self._conn = psycopg2.connect(
+            dbname=DB_NAME, 
+            user=USER, 
+            password=PASSWORD, 
+            host=HOST, 
+            port=PORT,
+        )
+        self._clear_epochs()
+        register_adapter(np.int64, self.addapt_numpy_int64)
 
-    # Delete all previous epochs
-    cur.execute("DELETE FROM epochs;")
-    # Commit the transaction to make the changes permanent
-    conn.commit()
-    
-    cur.execute("INSERT INTO epochs DEFAULT VALUES;")
-    conn.commit()
+    def _clear_epochs(self):
+        cur = self.conn.cursor()
+        cur.execute("DELETE FROM epochs;")
+        self.conn.commit()
 
-    # Close cursor and connection
-    cur.close()
-    conn.close()
+    # Function to adapt np.int64
+    def addapt_numpy_int64(numpy_int64):
+        return AsIs(numpy_int64)
+
+    def add_epoch_to_db(self, epoch, agent, rewards, betting):
+        # Register the adapter
+        cur = self.conn.cursor()
+
+        cur.execute("INSERT INTO epochs DEFAULT VALUES;")
+        self.conn.commit()
+
+        points = agent.rewards
+        average = np.cumsum(rewards) / np.arange(1, len(rewards) + 1)
+
+        for step in range(len(rewards)):
+            cur.execute(
+            "INSERT INTO average_data (step, bet, reward, points, average, fk_epoch_id) VALUES (%s, %s, %s, %s, %s, %s)",
+            (step, betting[step], rewards[step], points[step], average[step], epoch)
+        )
+
+        self.conn.commit()
+
+        # Close cursor and connection
+        cur.close()
+        self.conn.close()
