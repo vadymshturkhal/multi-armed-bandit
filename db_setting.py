@@ -7,6 +7,7 @@ PORT=5432
 """
 CREATE TABLE epochs (
     fk_epoch_id SERIAL PRIMARY KEY,
+    reward INT,
     description TEXT,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -34,3 +35,6 @@ CREATE TABLE average_data (
 """
 ALTER TABLE average_data ADD CONSTRAINT fk_epoch_id FOREIGN KEY (epoch_id) REFERENCES epochs(epoch_id) ON DELETE CASCADE;
 """
+
+"ALTER SEQUENCE epochs_fk_epoch_id_seq RESTART WITH 1;"
+"ALTER TABLE epochs OWNER TO agent;"
