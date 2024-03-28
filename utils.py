@@ -46,20 +46,20 @@ class DB_Operations():
         register_adapter(np.int64, self.addapt_numpy_int64)
 
     def _clear_epochs(self):
-        cur = self.conn.cursor()
+        cur = self._conn.cursor()
         cur.execute("DELETE FROM epochs;")
-        self.conn.commit()
+        self._conn.commit()
 
     # Function to adapt np.int64
-    def addapt_numpy_int64(numpy_int64):
+    def addapt_numpy_int64(self, numpy_int64):
         return AsIs(numpy_int64)
 
     def add_epoch_to_db(self, epoch, agent, rewards, betting):
         # Register the adapter
-        cur = self.conn.cursor()
+        cur = self._conn.cursor()
 
         cur.execute("INSERT INTO epochs DEFAULT VALUES;")
-        self.conn.commit()
+        self._conn.commit()
 
         points = agent.rewards
         average = np.cumsum(rewards) / np.arange(1, len(rewards) + 1)
@@ -70,8 +70,13 @@ class DB_Operations():
             (step, betting[step], rewards[step], points[step], average[step], epoch)
         )
 
-        self.conn.commit()
+        self._conn.commit()
+        self._reduce_epochs()
 
-        # Close cursor and connection
-        cur.close()
-        self.conn.close()
+    def _reduce_epochs(self):
+        self._total_epochs -= 1
+        if self._total_epochs == 0:
+            # Close cursor and connection
+            cur = self._conn.cursor()
+            cur.close()
+            self._conn.close()

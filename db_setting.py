@@ -6,7 +6,7 @@ PORT=5432
 
 """
 CREATE TABLE epochs (
-    epoch_id SERIAL PRIMARY KEY,
+    fk_epoch_id SERIAL PRIMARY KEY,
     description TEXT,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -16,9 +16,9 @@ CREATE TABLE epochs (
 CREATE TABLE average_data (
     data_id SERIAL PRIMARY KEY,
     step INT,
-    bet FLOAT,
-    reward FLOAT,
-    points FLOAT,
+    bet INT,
+    reward INT,
+    points INT,
     average FLOAT,
     fk_epoch_id INT,
     FOREIGN KEY (fk_epoch_id) REFERENCES epochs(epoch_id)
@@ -29,7 +29,7 @@ CREATE TABLE average_data (
 "GRANT ALL PRIVILEGES ON TABLE average_data TO agent;"
 "GRANT ALL PRIVILEGES ON TABLE epochs TO agent;"
 "GRANT USAGE, SELECT ON SEQUENCE average_data_data_id_seq TO agent;"
-"GRANT USAGE, SELECT ON SEQUENCE epochs_epoch_id_seq TO agent;"
+"GRANT USAGE, SELECT ON SEQUENCE epochs_fk_epoch_id_seq TO agent;"
 
 """
 ALTER TABLE average_data ADD CONSTRAINT fk_epoch_id FOREIGN KEY (epoch_id) REFERENCES epochs(epoch_id) ON DELETE CASCADE;
