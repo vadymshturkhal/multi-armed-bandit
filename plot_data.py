@@ -64,6 +64,22 @@ def plot_rewards(file_path: str):
     # Show the plot
     plt.show()
 
+def plot_epoch_rewards(epoch_rewards: list):
+    plt.figure(figsize=(10, 5))
+    plt.plot(range(len(epoch_rewards)), epoch_rewards, label='Points')
+
+    plt.xlabel('Epoch')
+    plt.ylabel('Reward')
+    plt.title('Points Over Time')
+
+    # Add a legend
+    plt.legend()
+    
+    # Show the plot
+    plt.show()
+
+
 if __name__ == '__main__':
     db_operations = DB_Operations()
-    db_operations.plot_last_epochs_rewards(epochs_amount=10)
+    epoch_rewards = db_operations.get_epoch_rewards(epochs_amount=10)
+    plot_epoch_rewards(epoch_rewards)
