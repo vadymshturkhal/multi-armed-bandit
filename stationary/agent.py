@@ -1,6 +1,4 @@
-import sys
 import numpy as np
-from settings import END_MULTIPLIER, START_POINT
 
 
 class Agent:
@@ -33,8 +31,6 @@ class Agent:
         """
         self.k = k
         self.epsilon = epsilon
-        self.points = START_POINT
-        self.rewards = []
 
         # Initialize estimates of action values and action counts
         self.Q = np.zeros(k)
@@ -66,14 +62,3 @@ class Agent:
         self.N[action] += 1
         #  Update the action value estimate with the incremental sample-average formula
         self.Q[action] += (1 / self.N[action]) * (reward - self.Q[action])
-    
-    def update_points(self, bet, reward):
-        self.points += reward - bet
-        self.rewards.append(self.points)
-        if self.points >= START_POINT * END_MULTIPLIER:
-            return True
-
-        if self.points <= 0:
-            return True
-        
-        return False

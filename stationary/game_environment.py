@@ -3,6 +3,7 @@ import sys
 
 from rewards import Rewards
 
+
 # Screen dimensions
 WIDTH = 600
 HEIGHT = 400

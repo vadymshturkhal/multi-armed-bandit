@@ -12,14 +12,12 @@ def train_bandit(game: MultiArmedGame, agent_bandit: Agent, steps=1000):
         reward = game.apply_action(action)
         game.play_step()
         agent_bandit.update_estimates(action, reward)
-        rewards_after_each_step.append(reward)
 
 
 if __name__ =='__main__':
     k = 10  # Number of actions (bandits)
     epsilon = 0.1  # Exploration probability
     steps = 1000
-    rewards_after_each_step = []
 
     agent_bandit = Agent(k, epsilon)
     game = MultiArmedGame(k, speed=60, is_rendering=False)
