@@ -33,7 +33,7 @@ def create_average_data(file_path: str, agent, rewards, betting):
     return results
 
 class DB_Operations():
-    def __init__(self, total_epochs=0):
+    def __init__(self, is_clear=True, total_epochs=0):
         self._total_epochs = total_epochs
         self._conn = psycopg2.connect(
             dbname=DB_NAME, 
@@ -42,13 +42,15 @@ class DB_Operations():
             host=HOST, 
             port=PORT,
         )
-        # self._clear_epochs()
+
+        if is_clear:
+            self._clear_epochs()
         register_adapter(np.int64, self.addapt_numpy_int64)
 
     def _clear_epochs(self):
         cur = self._conn.cursor()
-        cur.execute("DELETE FROM epochs;")
         cur.execute("DELETE FROM average_data;")
+        cur.execute("DELETE FROM epochs;")
         cur.execute("ALTER SEQUENCE epochs_fk_epoch_id_seq RESTART WITH 1;")
         cur.execute("ALTER SEQUENCE average_data_data_id_seq RESTART WITH 1;")
         self._conn.commit()
@@ -86,15 +88,21 @@ class DB_Operations():
 
     def get_epoch_rewards(self, epochs_amount:int):
         cur = self._conn.cursor()
+        # cur.execute(
+        #     """
+        #         SELECT reward FROM (
+        #         SELECT reward FROM epochs
+        #         ORDER BY fk_epoch_id DESC
+        #         LIMIT (%s)
+        #         ) AS last_rewards
+        #         ORDER BY reward ASC;
+        #     """, (epochs_amount,))
+
         cur.execute(
             """
-                SELECT reward FROM (
-                SELECT reward FROM epochs
-                ORDER BY fk_epoch_id DESC
-                LIMIT (%s)
-                ) AS last_rewards
-                ORDER BY reward ASC;;
+                SELECT reward FROM epochs;
             """, (epochs_amount,))
+
         rows = cur.fetchall()
         epoch_rewards = [row[0] for row in rows]
 
