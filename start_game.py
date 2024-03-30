@@ -1,6 +1,5 @@
 from agent import Agent
 from game_environment import MultiArmedGame
-from plot_data import plot_stationary_bar_data
 from settings import stationary_bandit_data_bar_filename
 from utils import create_bar_data
 
@@ -16,7 +15,7 @@ def train_bandit(game: MultiArmedGame, agent_bandit: Agent, steps=1000):
 
 if __name__ =='__main__':
     k = 10  # Number of actions (bandits)
-    epsilon = 0.1  # Exploration probability
+    epsilon = 0.3  # Exploration probability
     steps = 1000
 
     agent_bandit = Agent(k, epsilon)

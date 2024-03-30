@@ -64,6 +64,7 @@ class MultiArmedGame:
             self.last_choice = action
             self.last_reward = self.rewards.get_reward(action)
             self.total_score += self.last_reward
+            self.rewards.change_reward_probabilities()
             return self.last_reward
         else:
             raise Exception(f"Can't pull arm {action}")
