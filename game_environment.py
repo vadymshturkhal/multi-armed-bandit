@@ -1,7 +1,7 @@
 import pygame
 import sys
 
-from rewards import DealerRewards
+from rewards import Rewards
 
 
 # Screen dimensions
@@ -14,15 +14,19 @@ text_color = (255, 255, 255)
 
 
 class MultiArmedGame:
-    def __init__(self, k, speed=30, is_rendering=True, ai_agent=None):
+    def __init__(self, k, speed=30, is_rendering=True, ai_agent=None, is_change_probabilities=False):
+        """
+        is_change_probabilities changed rewards every game step.
+        """
         self.total_score = 0
-        self.last_dealer = 0
-        self.last_bet = None
+        self.last_reward = 0
+        self.last_choice = None
         self.k = k
         self.game_speed = speed
         self.is_rendering = is_rendering
         self.ai_agent = ai_agent
-        self.dealers = [DealerRewards() for _ in range(k)]
+        self.rewards = Rewards(k)
+        self.is_change_probabilities = is_change_probabilities
     
         # init display
         if self.is_rendering:
@@ -55,14 +59,10 @@ class MultiArmedGame:
                         chosen_bandit = event.key - pygame.K_1
                         self.apply_action(chosen_bandit)
 
-    def apply_action(self, action: int, bet:int):
-        if action < 0:
-            raise Exception(f'Unavailable action {action}')
-        
-        if action <= self.k:
-            self.last_dealer = action + 1
-            self.last_bet = self.dealers[action].bet[bet]
-            self.last_reward = self.dealers[action].get_reward(bet)
+    def apply_action(self, action):
+        if action < self.k:
+            self.last_choice = action
+            self.last_reward = self.rewards.get_reward(action)
             self.total_score += self.last_reward
             return self.last_reward
         else:
