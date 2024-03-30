@@ -9,6 +9,7 @@ The Multi-Armed Bandit problem is a classic reinforcement learning scenario that
 ### Game
 
 The game component allows users to interactively pull one of the k arms and observe the reward. The game is implemented using Pygame for a graphical interface, providing a visual and interactive experience.
+The simulation features a dynamic rewards system to mimic changing environments, making the game more challenging and realistic. The `Rewards` class is responsible for managing the reward probabilities for each of the bandit's arms. Initially, each arm is assigned a random probability of delivering a reward. As the game progresses, these probabilities are updated to simulate a changing environment, ensuring that the optimal strategy evolves over time.
 
 ### Reinforcement Learning Stationary Agent
 
