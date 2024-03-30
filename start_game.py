@@ -24,4 +24,3 @@ if __name__ =='__main__':
 
     train_bandit(game, agent_bandit, steps)
     create_bar_data(stationary_bandit_data_bar_filename, k, agent_bandit, game.rewards.true_reward_probabilities)
-    plot_stationary_bar_data()

@@ -25,18 +25,17 @@ To run this project, you need Python 3 and the following Python libraries:
 - NumPy
 - Matplotlib
 - Pandas
-- Psycopg2
 
 You can install the required libraries using pip:
 
 ```bash
-pip install pygame numpy matplotlib pandas psycopg2
+pip install pygame numpy matplotlib pandas
 ```
 
 ## Running
 To run the simulation with the reinforcement learning agent:
 ```bash
-python multi_armed_bandit.py
+python start_game.py
 ```
 
 ## Viewing plots of the agent's performance and decisions:

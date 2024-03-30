@@ -24,3 +24,6 @@ def plot_stationary_bar_data():
     plt.title('Number of Times Each Arm Has Been Chosen')
     plt.xticks(df['Action'])
     plt.show()
+
+if __name__ == '__main__':
+    plot_stationary_bar_data()
