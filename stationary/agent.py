@@ -1,10 +1,5 @@
 import sys
-from pathlib import Path
 import numpy as np
-
-# Add the parent directory to sys.path
-sys.path.append(str(Path(__file__).resolve().parent.parent))
-
 from settings import END_MULTIPLIER, START_POINT
 
 

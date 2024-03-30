@@ -1,11 +1,5 @@
 from agent import Agent
 from game_environment import MultiArmedGame
-
-import sys
-from pathlib import Path
-# Add the parent directory to sys.path
-sys.path.append(str(Path(__file__).resolve().parent.parent))
-
 from plot_data import plot_stationary_bar_data
 from settings import stationary_bandit_data_bar_filename
 from utils import create_bar_data
