@@ -33,7 +33,7 @@ CREATE TABLE average_data (
 "GRANT USAGE, SELECT ON SEQUENCE epochs_fk_epoch_id_seq TO agent;"
 
 """
-ALTER TABLE average_data ADD CONSTRAINT fk_epoch_id FOREIGN KEY (epoch_id) REFERENCES epochs(epoch_id) ON DELETE CASCADE;
+ALTER TABLE average_data ADD CONSTRAINT fk_epoch_id FOREIGN KEY (fk_epoch_id) REFERENCES epochs(fk_epoch_id) ON DELETE CASCADE;
 """
 
 "ALTER SEQUENCE epochs_fk_epoch_id_seq RESTART WITH 1;"
