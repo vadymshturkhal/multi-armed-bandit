@@ -70,7 +70,7 @@ def plot_epoch_rewards(epoch_rewards: list):
 
     plt.xlabel('Epoch')
     plt.ylabel('Reward')
-    plt.title('Points Over Time')
+    plt.title('Each epoch reward')
 
     # Add a legend
     plt.legend()
@@ -80,6 +80,11 @@ def plot_epoch_rewards(epoch_rewards: list):
 
 
 if __name__ == '__main__':
-    db_operations = DB_Operations()
-    epoch_rewards = db_operations.get_epoch_rewards(epochs_amount=10)
+    db_operations = DB_Operations(is_clear=False)
+    epoch_rewards = db_operations.get_epoch_rewards(epochs_amount=40)
+
+    for epoch, reward in enumerate(epoch_rewards, start=1):
+        print(epoch, reward)
+
+    print(sum(epoch_rewards))
     plot_epoch_rewards(epoch_rewards)
