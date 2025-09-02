@@ -35,6 +35,12 @@ class Agent:
         # Initialize estimates of action values and action counts
         self.Q = np.zeros(k)
         self.N = np.zeros(k)
+        self.action_rewards = np.zeros(k)
+
+        self.times_action_taken = {action: 0 for action in range(k)}
+        print(self.Q)
+        print(self.N )
+        print(self.action_rewards)
 
     def choose_action(self) -> int:
         """
@@ -60,5 +66,12 @@ class Agent:
             reward (float): The reward received from taking the action.
         """
         self.N[action] += 1
+        self.action_rewards[action] += reward
+
         #  Update the action value estimate with the incremental sample-average formula
-        self.Q[action] += (1 / self.N[action]) * (reward - self.Q[action])
+        self.Q[action] = self.action_rewards[action] / self.N[action]
+
+        # #  Update the action value estimate with the incremental sample-average formula
+        # self.Q[action] += (1 / self.N[action]) * (reward - self.Q[action])
+        # self.rewards.append(reward)
+
