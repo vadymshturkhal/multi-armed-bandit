@@ -37,10 +37,6 @@ class Agent:
         self.N = np.zeros(k)
         self.action_rewards = np.zeros(k)
 
-        self.times_action_taken = {action: 0 for action in range(k)}
-        print(self.Q)
-        print(self.N )
-        print(self.action_rewards)
 
     def choose_action(self) -> int:
         """
