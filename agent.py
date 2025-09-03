@@ -53,6 +53,7 @@ class Agent:
         else:
             return np.argmax(self.Q)  # Exploit: choose the best current action
 
+
     def update_estimates(self, action, reward):
         """
         Updates the action value estimates (Q) for a specific action based on the received reward.
@@ -64,10 +65,9 @@ class Agent:
         self.N[action] += 1
         self.action_rewards[action] += reward
 
-        #  Update the action value estimate with the incremental sample-average formula
+        #  Used Sample-Average as the action-value estimate
         self.Q[action] = self.action_rewards[action] / self.N[action]
 
         # #  Update the action value estimate with the incremental sample-average formula
         # self.Q[action] += (1 / self.N[action]) * (reward - self.Q[action])
-        # self.rewards.append(reward)
 
