@@ -28,4 +28,5 @@ if __name__ =='__main__':
     game = MultiArmedGame(k, speed=60, is_rendering=False)
 
     train_bandit(game, agent_bandit, steps)
-    plot_violin_plot()
+
+    game.rewards.plot_combined(stationary_bandit_data_average_reward)
