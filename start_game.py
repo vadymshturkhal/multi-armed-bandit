@@ -29,3 +29,4 @@ if __name__ =='__main__':
 
     train_bandit(game, agent_bandit, run_data_logger, steps)
     run_data_logger.create_detailed_run_data(stationary_bandit_detailed_run_data_filename)
+    game.rewards.plot_combined(stationary_bandit_detailed_run_data_filename)
