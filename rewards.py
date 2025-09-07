@@ -10,7 +10,6 @@ class Rewards:
         self.q_star = np.random.normal(loc=0.0, scale=1.0, size=k)
         self.samples = 0
 
-
     # Simulate pulling the bandit's lever
     def get_reward(self, action):
         reward = np.random.normal(loc=self.q_star[action], scale=1.0, size=1)
