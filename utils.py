@@ -1,16 +1,35 @@
 import pandas as pd
-import numpy as np
 
 
-def create_bar_data(file_path: str, k: int, agent, true_reward_probabilities):
-    # Creating a DataFrame to hold the results
-    results = pd.DataFrame({
-        'Action': np.arange(0, k),
-        'Estimated Action Values': agent.Q,
-        'True Action Values': true_reward_probabilities,
-        'Number of Times Chosen': agent.N,
-    })
+class RunDataLogger:
+    def __init__(self, true_rewards):
+        self.true_rewards = true_rewards
+        self.steps = []
+        self.actions = []
+        self.rewards = []
+        self.Q_actions = []
+        self.average_action_rewards = []
+        self.average_general_rewards = []
 
-    # Save the DataFrame to a CSV file
-    results.to_csv(file_path, index=False)
-    return results
+    def add_step_data(self, step, action, reward, Q_action, average_action_reward, average_general_reward):
+        self.steps.append(step)
+        self.actions.append(action)
+        self.rewards.append(reward)
+        self.Q_actions.append(Q_action)
+        self.average_action_rewards.append(average_action_reward)
+        self.average_general_rewards.append(average_general_reward)
+
+    def create_detailed_run_data(self, file_path):
+        results = pd.DataFrame({
+            'Step': self.steps,
+            'Action': self.actions,
+            'Reward': self.rewards,
+            'Q[action]': self.Q_actions,
+            'Average action reward': self.average_action_rewards,
+            'Average general reward': self.average_general_rewards,
+        })
+
+        results = results.map(lambda x: f'{x:.4f}' if type(x) == float else x)
+
+        results.to_csv(file_path, index=False)
+        return results
