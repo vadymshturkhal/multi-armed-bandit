@@ -1,7 +1,8 @@
-from agent import Agent
+from agent import Agent, GradientAgent
 from game_environment import MultiArmedGame
-from settings import stationary_bandit_detailed_run_data_filename
+from settings import epsilon_agent_data_filename, gradient_agent_data_filename
 from utils import RunDataLogger
+from plot_data import plot_agents_data
 
 
 def train_bandit(game: MultiArmedGame, agent_bandit: Agent, run_data_logger: RunDataLogger, steps=1000):
@@ -20,13 +21,24 @@ def train_bandit(game: MultiArmedGame, agent_bandit: Agent, run_data_logger: Run
 
 if __name__ =='__main__':
     k = 10  # Number of actions (bandits)
-    epsilon = 0.2  # Exploration probability
-    steps = 1000
+    epsilon = 0.1  # Exploration probability
+    alpha = 0.1
+    steps = 4000
 
+    print('training epsilon agent')
     agent_bandit = Agent(k, epsilon)
     game = MultiArmedGame(k, speed=60, is_rendering=False)
     run_data_logger = RunDataLogger(game.rewards.q_star)
 
     train_bandit(game, agent_bandit, run_data_logger, steps)
-    run_data_logger.create_detailed_run_data(stationary_bandit_detailed_run_data_filename)
-    game.rewards.plot_combined(stationary_bandit_detailed_run_data_filename)
+    run_data_logger.create_detailed_run_data(epsilon_agent_data_filename)
+
+
+    print('training gradient agent')
+    agent_bandit = GradientAgent(k, alpha)
+    run_data_logger = RunDataLogger(game.rewards.q_star)
+
+    train_bandit(game, agent_bandit, run_data_logger, steps)
+    run_data_logger.create_detailed_run_data(gradient_agent_data_filename)
+
+    plot_agents_data(epsilon_agent_data_filename, gradient_agent_data_filename)
