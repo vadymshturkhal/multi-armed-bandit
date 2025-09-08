@@ -60,6 +60,29 @@ def plot_violin_plot():
     plt.show()
 
 
+def plot_agents_data(agent_first_filename, agent_second_filename):
+    df1 = pd.read_csv(agent_first_filename)
+    df2 = pd.read_csv(agent_second_filename)
+
+    # Extract step and general reward
+    steps1 = df1["Step"]
+    general1 = df1["Average general reward"]
+
+    steps2 = df2["Step"]
+    general2 = df2["Average general reward"]
+
+    # Plot comparison
+    plt.figure(figsize=(8,5))
+    plt.plot(steps1, general1, label=f"{agent_first_filename}")
+    plt.plot(steps2, general2, label=f"{agent_second_filename}")
+    plt.xlabel("Steps")
+    plt.ylabel("Average general reward")
+    plt.title("Comparison of Average General Reward")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+
 if __name__ == '__main__':
     # plot_stationary_bar_data()
     plot_violin_plot()
