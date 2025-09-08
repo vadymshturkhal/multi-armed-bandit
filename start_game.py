@@ -21,9 +21,9 @@ def train_bandit(game: MultiArmedGame, agent_bandit: Agent, run_data_logger: Run
 
 if __name__ =='__main__':
     k = 10  # Number of actions (bandits)
-    epsilon = 0.1  # Exploration probability
+    epsilon = 0.01  # Exploration probability
     alpha = 0.1
-    steps = 4000
+    steps = 10000
 
     print('training epsilon agent')
     agent_bandit = Agent(k, epsilon)
