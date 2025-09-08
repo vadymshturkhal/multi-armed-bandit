@@ -1,4 +1,4 @@
-# Multi-Armed Bandit Project
+# Stationary Multi-Armed Bandit Project
 
 This repository contains a simulation of the Multi-Armed Bandit problem, implemented in Python. The project is designed to explore reinforcement learning concepts, specifically focusing on the ε-greedy strategy for a stationary agent. The game allows interaction and observation of the agent's learning process over time. Additionally, the project includes functionality for plotting data to visualize the agent's decisions and performance.
 
