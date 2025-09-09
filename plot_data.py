@@ -60,9 +60,10 @@ def plot_violin_plot():
     plt.show()
 
 
-def plot_agents_data(agent_first_filename, agent_second_filename):
+def plot_agents_data(agent_first_filename, agent_second_filename, agent_third_filename):
     df1 = pd.read_csv(agent_first_filename)
     df2 = pd.read_csv(agent_second_filename)
+    df3 = pd.read_csv(agent_third_filename)
 
     # Extract step and general reward
     steps1 = df1["Step"]
@@ -71,10 +72,14 @@ def plot_agents_data(agent_first_filename, agent_second_filename):
     steps2 = df2["Step"]
     general2 = df2["Average general reward"]
 
+    steps3 = df3["Step"]
+    general3 = df3["Average general reward"]
+
     # Plot comparison
     plt.figure(figsize=(8,5))
     plt.plot(steps1, general1, label=f"{agent_first_filename}")
     plt.plot(steps2, general2, label=f"{agent_second_filename}")
+    plt.plot(steps3, general3, label=f"{agent_third_filename}")
     plt.xlabel("Steps")
     plt.ylabel("Average general reward")
     plt.title("Comparison of Average General Reward")

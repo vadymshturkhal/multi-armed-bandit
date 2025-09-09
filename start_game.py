@@ -1,6 +1,6 @@
-from agent import Agent, GradientAgent
+from agent import Agent, GradientAgent, UCBAgent
 from game_environment import MultiArmedGame
-from settings import epsilon_agent_data_filename, gradient_agent_data_filename
+from settings import epsilon_agent_data_filename, gradient_agent_data_filename, ucb_agent_data_filename
 from utils import RunDataLogger
 from plot_data import plot_agents_data
 
@@ -29,16 +29,19 @@ if __name__ =='__main__':
     agent_bandit = Agent(k, epsilon)
     game = MultiArmedGame(k, speed=60, is_rendering=False)
     run_data_logger = RunDataLogger(game.rewards.q_star)
-
     train_bandit(game, agent_bandit, run_data_logger, steps)
     run_data_logger.create_detailed_run_data(epsilon_agent_data_filename)
-
 
     print('training gradient agent')
     agent_bandit = GradientAgent(k, alpha)
     run_data_logger = RunDataLogger(game.rewards.q_star)
-
     train_bandit(game, agent_bandit, run_data_logger, steps)
     run_data_logger.create_detailed_run_data(gradient_agent_data_filename)
 
-    plot_agents_data(epsilon_agent_data_filename, gradient_agent_data_filename)
+    print('training ucb agent')
+    agent_bandit = UCBAgent(k)
+    run_data_logger = RunDataLogger(game.rewards.q_star)
+    train_bandit(game, agent_bandit, run_data_logger, steps)
+    run_data_logger.create_detailed_run_data(ucb_agent_data_filename)
+
+    plot_agents_data(epsilon_agent_data_filename, gradient_agent_data_filename, ucb_agent_data_filename)
