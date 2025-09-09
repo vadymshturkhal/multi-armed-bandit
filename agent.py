@@ -153,3 +153,60 @@ class GradientAgent:
 
         # refresh policy
         self._update_policy()
+
+
+class UCBAgent:
+    """
+    Upper-Confidence-Bound (UCB1) bandit agent.
+    API matches GradientAgent: choose_action(), update_estimates(action, reward).
+
+    Action choice:
+        A_t = argmax_a [ Q(a) + c * sqrt( ln(t) / N(a) ) ]
+    with the convention that untried actions (N(a)=0) are considered maximizing.
+
+    Args:
+        k (int): number of actions.
+        c (float): exploration coefficient (>0). Typical: 1~2.
+        optimistic_Q0 (float): optional optimistic initial Q values (default 0.0).
+    """
+
+    def __init__(self, k, c=2.0, optimistic_Q0=0.0):
+        self.k = k
+        self.c = float(c)
+
+        # Sample-average estimates and counts (like your epsilon agent)
+        self.Q = np.full(k, optimistic_Q0, dtype=float)
+        self.N = np.zeros(k, dtype=float)
+        self.action_rewards = np.zeros(k, dtype=float)
+
+        # step counter t (start at 0; we use ln(t) with t>=1)
+        self.t = 0
+
+    def choose_action(self) -> int:
+        """
+        Choose the action maximizing Q(a) + c * sqrt(ln t / N(a)).
+        Untried actions (N==0) are prioritized.
+        """
+        self.t += 1
+        # If any action is untried, pick one of them uniformly (UCB convention)
+        untried = np.where(self.N == 0)[0]
+        if len(untried) > 0:
+            return int(np.random.choice(untried))
+
+        # Compute UCB scores
+        confidence = self.c * np.sqrt(np.log(self.t) / self.N)
+        scores = self.Q + confidence
+
+        # Break ties randomly
+        max_val = scores.max()
+        candidates = np.where(scores == max_val)[0]
+        return int(np.random.choice(candidates))
+
+    def update_estimates(self, action: int, reward: float):
+        """
+        Incremental sample-average update for Q(action), and bookkeeping.
+        """
+        self.N[action] += 1.0
+        self.action_rewards[action] += reward
+        # Incremental mean
+        self.Q[action] += (reward - self.Q[action]) / self.N[action]
